@@ -1,3 +1,5 @@
 /node_modules
 .idea
 .cache
+/public/static
+/public/page-data
