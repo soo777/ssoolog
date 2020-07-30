@@ -3,3 +3,5 @@
 .cache
 /public/static
 /public/page-data
+/public
+yarn.lock
