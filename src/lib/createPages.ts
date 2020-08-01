@@ -1,5 +1,6 @@
 import { CreatePagesArgs } from 'gatsby';
 import path from 'path';
+import { Query } from '../graphql-types';
 
 const pages = [
     { id: 1, content: 'Gatsby 로 블로그 만들기' },
@@ -18,18 +19,25 @@ export async function createPages({ actions, graphql }: CreatePagesArgs) {
     //     });
     // });
 
-    const { data, errors } = await graphql(`
-            {
-                allMarkdownRemark {
-                    edges {
-                        node {
-                            html
-                            frontmatter {
-                                title
-                            }
-                        }
-                    }
-                }
+    // const { data, errors } = await graphql(`
+    //         {
+    //             allMarkdownRemark {
+    //                 edges {
+    //                     node {
+    //                         html
+    //                         frontmatter {
+    //                             title
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     `);
+
+    const { data, errors } = await graphql<Query>(`
+        {
+            allMarkdownRemark {
+                    /* 생략 */
             }
         `);
 
@@ -37,10 +45,10 @@ export async function createPages({ actions, graphql }: CreatePagesArgs) {
         throw errors;
     }
 
-    const editedData = JSON.parse(JSON.stringify(data));
-    console.log(editedData);
+    // const editedData = JSON.parse(JSON.stringify(data));
+    // console.log(editedData);
 
-    editedData.allMarkdownRemark.edges.forEach(({ node }: any) => {
+    data.allMarkdownRemark.edges.forEach(({ node }: any) => {
         console.log(node);
         createPage({
             path: node.frontmatter.title,
