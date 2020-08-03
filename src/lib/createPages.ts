@@ -36,8 +36,16 @@ export async function createPages({ actions, graphql }: CreatePagesArgs) {
 
     const { data, errors } = await graphql<Query>(`
         {
-            allMarkdownRemark {
-                    /* 생략 */
+                allMarkdownRemark {
+                    edges {
+                        node {
+                            html
+                            frontmatter {
+                                title
+                            }
+                        }
+                    }
+                }
             }
         `);
 
